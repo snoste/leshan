@@ -108,6 +108,7 @@ public class EventServlet extends EventSourceServlet {
             try
             {
                 String filename= "C:\\Users\\s168877\\Documents\\IOT.txt";
+             // String fname="/home/snorriste/iot.txt";
                 FileWriter fw = new FileWriter(filename,true); //the true will append the new data
                 
                
