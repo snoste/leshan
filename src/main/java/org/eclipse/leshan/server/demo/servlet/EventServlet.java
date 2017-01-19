@@ -93,6 +93,8 @@ public class EventServlet extends EventSourceServlet {
     private static List<String> SensorState;
     
     private static List<String> Deployment;
+    
+    private static List<String> CurrentUser;
 
     private Set<LeshanEventSource> eventSources = Collections
             .newSetFromMap(new ConcurrentHashMap<LeshanEventSource, Boolean>());
@@ -471,6 +473,7 @@ counter++;
        
         this.Deployment=new ArrayList<String>();
         this.SensorState=new ArrayList<String>();
+        this.CurrentUser=new ArrayList<String>();
     }
 
     private synchronized void sendEvent(String event, String data, String endpoint) {
