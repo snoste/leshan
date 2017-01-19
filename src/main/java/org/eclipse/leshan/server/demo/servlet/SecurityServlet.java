@@ -225,7 +225,7 @@ public class SecurityServlet extends HttpServlet {
                 resp.getOutputStream().write(response.getBytes());
                 resp.setStatus(HttpServletResponse.SC_OK);
                 
-                if(endpoints.length>=1)
+                if(endpoints.length>=UserId.size())
                 {
                 	counter++;
                 int GrNo=Integer.parseInt(GroupNo.get(counter));
@@ -245,13 +245,43 @@ public class SecurityServlet extends HttpServlet {
                  
                   try {
                 	 
-        			 WriteRequest request = new WriteRequest(10350,0,7,GrNo);
+        			 WriteRequest request = new WriteRequest(10350,0,4,GrNo);
                      WriteResponse cResponse = server.send(registration, request, TIMEOUT);
                      processDeviceResponse(req, resp, cResponse);
     			} catch (InterruptedException e) {
     				// TODO Auto-generated catch block
     				e.printStackTrace();
     			}
+                  
+                  
+                  
+                  
+                  String roomid=RoomId.get(counter);
+                  
+                  
+                  try {
+                 	 
+         			 WriteRequest request = new WriteRequest(10250,0,10,roomid);
+                      WriteResponse cResponse = server.send(registration, request, TIMEOUT);
+                      processDeviceResponse(req, resp, cResponse);
+     			} catch (InterruptedException e) {
+     				// TODO Auto-generated catch block
+     				e.printStackTrace();
+     			}
+                  
+                  
+                   try {
+                 	 
+         			 WriteRequest request = new WriteRequest(10350,0,7,roomid);
+                      WriteResponse cResponse = server.send(registration, request, TIMEOUT);
+                      processDeviceResponse(req, resp, cResponse);
+     			} catch (InterruptedException e) {
+     				// TODO Auto-generated catch block
+     				e.printStackTrace();
+     			}
+                   
+                  
+                  
                 
                 
                 }

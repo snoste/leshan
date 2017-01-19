@@ -15,6 +15,9 @@
  *******************************************************************************/
 package org.eclipse.leshan.server.demo.servlet;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -27,6 +30,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.californium.core.network.Endpoint;
 import org.eclipse.leshan.core.node.LwM2mNode;
 import org.eclipse.leshan.core.node.LwM2mResource;
@@ -37,6 +41,7 @@ import org.eclipse.leshan.core.request.ObserveRequest;
 import org.eclipse.leshan.core.request.WriteRequest;
 import org.eclipse.leshan.core.response.LwM2mResponse;
 import org.eclipse.leshan.core.response.ObserveResponse;
+import org.eclipse.leshan.core.response.WriteResponse;
 import org.eclipse.leshan.server.californium.impl.LeshanServer;
 import org.eclipse.leshan.server.client.Registration;
 import org.eclipse.leshan.server.client.RegistrationUpdate;
@@ -80,6 +85,14 @@ public class EventServlet extends EventSourceServlet {
     private final LeshanServer server;
     
     private static List<String> endpoints;
+    private static int counter;
+    private static List<String> LightColor;
+    private static List<String> LightState;
+    
+    
+    private static List<String> SensorState;
+    
+    private static List<String> Deployment;
 
     private Set<LeshanEventSource> eventSources = Collections
             .newSetFromMap(new ConcurrentHashMap<LeshanEventSource, Boolean>());
@@ -92,6 +105,7 @@ public class EventServlet extends EventSourceServlet {
             sendEvent(EVENT_REGISTRATION, jReg, registration.getEndpoint());
             LwM2mResponse response;
             String endpoint=registration.getEndpoint();
+            endpoints.add(endpoint);
             System.out.println(endpoint);
             
            /* try{
@@ -104,11 +118,12 @@ public class EventServlet extends EventSourceServlet {
             }
             */
             
+            String filename= "C:\\Users\\s168877\\Documents\\IOT.txt";
+            // String fname="/home/snorriste/iot.txt";
             
             try
             {
-                String filename= "C:\\Users\\s168877\\Documents\\IOT.txt";
-             // String fname="/home/snorriste/iot.txt";
+              
                 FileWriter fw = new FileWriter(filename,true); //the true will append the new data
                 
                
@@ -120,14 +135,21 @@ public class EventServlet extends EventSourceServlet {
             {
                 System.err.println("IOException: " + ioe.getMessage());
             }
-
+            
+           
+            
+counter++;
             
             
             
             
-         // write the current time resource
-            int gr=14;
-            WriteRequest write = new WriteRequest(10250,0,7,gr);
+         
+            if(counter==1)
+            {
+            	
+            	
+             
+            	WriteRequest write = new WriteRequest(10250,0,8,4.0);
              try {
 				response = server.send(registration, write);
 				System.out.println("Write response: " + response);
@@ -136,63 +158,7 @@ public class EventServlet extends EventSourceServlet {
 				e.printStackTrace();
 			}
              
-              write = new WriteRequest(10250,0,8,2.415);
-             try {
-				response = server.send(registration, write);
-				System.out.println("Write response: " + response);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-             
-             write = new WriteRequest(10250,0,9,-89.41);
-             try {
- 				response = server.send(registration, write);
- 				System.out.println("Write response: " + response);
- 			} catch (InterruptedException e) {
- 				// TODO Auto-generated catch block
- 				e.printStackTrace();
- 			}
-             
-             write = new WriteRequest(10250,0,10,"RoomId-room1");
-             try {
- 				response = server.send(registration, write);
- 				System.out.println("Write response: " + response);
- 			} catch (InterruptedException e) {
- 				// TODO Auto-generated catch block
- 				e.printStackTrace();
- 			}
-             
-             /*
-             int gr=14;
-              write = new WriteRequest(10350,0,4,gr);
-             try {
-				response = server.send(registration, write);
-				System.out.println("Write response: " + response);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-             
-              write = new WriteRequest(10350,0,5,5.321);
-             try {
-				response = server.send(registration, write);
-				System.out.println("Write response: " + response);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-             
-             write = new WriteRequest(10350,0,6,64.5134);
-             try {
- 				response = server.send(registration, write);
- 				System.out.println("Write response: " + response);
- 			} catch (InterruptedException e) {
- 				// TODO Auto-generated catch block
- 				e.printStackTrace();
- 			}
-             
-             write = new WriteRequest(10350,0,7,"RoomId-room1");
+             write = new WriteRequest(10250,0,9,8.0);
              try {
  				response = server.send(registration, write);
  				System.out.println("Write response: " + response);
@@ -202,7 +168,194 @@ public class EventServlet extends EventSourceServlet {
  			}
              
              
-             */
+             
+             write = new WriteRequest(10350,0,5,4.0);
+             try {
+				response = server.send(registration, write);
+				System.out.println("Write response: " + response);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+             
+             write = new WriteRequest(10350,0,6,8.0);
+             try {
+ 				response = server.send(registration, write);
+ 				System.out.println("Write response: " + response);
+ 			} catch (InterruptedException e) {
+ 				// TODO Auto-generated catch block
+ 				e.printStackTrace();
+ 			}
+             
+             
+             
+            }
+            
+            
+            
+            
+            if(counter==2)
+            {
+            	
+            	
+             
+            	WriteRequest write = new WriteRequest(10250,0,8,6.0);
+             try {
+				response = server.send(registration, write);
+				System.out.println("Write response: " + response);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+             
+             write = new WriteRequest(10250,0,9,5.0);
+             try {
+ 				response = server.send(registration, write);
+ 				System.out.println("Write response: " + response);
+ 			} catch (InterruptedException e) {
+ 				// TODO Auto-generated catch block
+ 				e.printStackTrace();
+ 			}
+             
+             
+             
+             write = new WriteRequest(10350,0,5,6.0);
+             try {
+				response = server.send(registration, write);
+				System.out.println("Write response: " + response);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+             
+             write = new WriteRequest(10350,0,6,5.0);
+             try {
+ 				response = server.send(registration, write);
+ 				System.out.println("Write response: " + response);
+ 			} catch (InterruptedException e) {
+ 				// TODO Auto-generated catch block
+ 				e.printStackTrace();
+ 			}
+             
+             
+             
+            }
+            
+            
+            
+            
+            
+            if(counter==3)
+            {
+            	
+            	
+             
+            	WriteRequest write = new WriteRequest(10250,0,8,4.0);
+             try {
+				response = server.send(registration, write);
+				System.out.println("Write response: " + response);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+             
+             write = new WriteRequest(10250,0,9,2.0);
+             try {
+ 				response = server.send(registration, write);
+ 				System.out.println("Write response: " + response);
+ 			} catch (InterruptedException e) {
+ 				// TODO Auto-generated catch block
+ 				e.printStackTrace();
+ 			}
+             
+             
+             
+             write = new WriteRequest(10350,0,5,4.0);
+             try {
+				response = server.send(registration, write);
+				System.out.println("Write response: " + response);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+             
+             write = new WriteRequest(10350,0,6,2.0);
+             try {
+ 				response = server.send(registration, write);
+ 				System.out.println("Write response: " + response);
+ 			} catch (InterruptedException e) {
+ 				// TODO Auto-generated catch block
+ 				e.printStackTrace();
+ 			}
+             
+             
+             
+            }
+            
+            
+            
+            
+            if(counter>=4)
+            {
+            	
+            	
+             
+            	WriteRequest write = new WriteRequest(10250,0,8,2.0);
+             try {
+				response = server.send(registration, write);
+				System.out.println("Write response: " + response);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+             
+             write = new WriteRequest(10250,0,9,5.0);
+             try {
+ 				response = server.send(registration, write);
+ 				System.out.println("Write response: " + response);
+ 			} catch (InterruptedException e) {
+ 				// TODO Auto-generated catch block
+ 				e.printStackTrace();
+ 			}
+             
+             
+             
+             write = new WriteRequest(10350,0,5,2.0);
+             try {
+				response = server.send(registration, write);
+				System.out.println("Write response: " + response);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+             
+             write = new WriteRequest(10350,0,6,5.0);
+             try {
+ 				response = server.send(registration, write);
+ 				System.out.println("Write response: " + response);
+ 			} catch (InterruptedException e) {
+ 				// TODO Auto-generated catch block
+ 				e.printStackTrace();
+ 			}
+             
+             
+             
+            }
+            
+            
+            
+            
+             try {
+				response = server.send(registration, new ObserveRequest(10250, 0, 7));
+				System.out.println("Observe response: " + response);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+            
+             
+            
+             
             
             
         }
@@ -228,12 +381,55 @@ public class EventServlet extends EventSourceServlet {
 
         @Override
         public void newValue(Observation observation, ObserveResponse response) {
-            if (LOG.isDebugEnabled()) {
+        	Registration registration = server.getRegistrationService().getById(observation.getRegistrationId());
+
+        	String target = StringUtils.substringBetween(response.getContent().toString(), "value=", ",");
+        	int id = Integer.parseInt(StringUtils.substringBetween(response.getContent().toString(), "id=", ","));
+        	String endpoint=registration.getEndpoint();
+        	int Objid=observation.getPath().getObjectId();
+        	int p=-1;
+        	for(int i=0;i<endpoints.size();i++)
+        	{
+        		if(endpoint.equals(endpoints.get(i)))
+        			p=i;
+        	}
+        	
+        	if(p!=-1)
+        	{
+        	if(Deployment.get(p).toUpperCase().equals("CENTRALIZED"))
+        	{
+        		
+        		if(SensorState.get(p).toUpperCase().equals("OCCUPIED"))
+        		{
+        			
+        			//WriteRequest request = new WriteRequest(objid,instid,rsrcid,grpNo);
+               // WriteResponse cResponse = server.send(registration, request, TIMEOUT);
+        			//write light state=userstate
+        			//write light color=usercolor
+        			
+        		}
+        		
+        		else
+        		{
+        			//write light state=dim
+        			//write light color=off
+        			
+        			
+        		}
+        		
+        	}
+        		
+        		
+        		
+        	}
+        
+        	
+        	System.out.println("New value:"+target+"  ep: " +endpoint+" id: "+id+"Objid:"+Objid);
+        	if (LOG.isDebugEnabled()) {
                 LOG.debug("Received notification from [{}] containing value [{}]", observation.getPath(),
                         response.getContent().toString());
             }
-            Registration registration = server.getRegistrationService().getById(observation.getRegistrationId());
-
+            
             if (registration != null) {
                 String data = new StringBuffer("{\"ep\":\"").append(registration.getEndpoint()).append("\",\"res\":\"")
                         .append(observation.getPath().toString()).append("\",\"val\":")
@@ -247,6 +443,9 @@ public class EventServlet extends EventSourceServlet {
         @Override
         public void newObservation(Observation observation) {
         }
+        
+        
+        
     };
 
     public EventServlet(LeshanServer server, int securePort) {
@@ -266,6 +465,12 @@ public class EventServlet extends EventSourceServlet {
         gsonBuilder.registerTypeHierarchyAdapter(LwM2mNode.class, new LwM2mNodeSerializer());
         gsonBuilder.setDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX");
         this.gson = gsonBuilder.create();
+        this.counter=0;
+        this.LightColor=new ArrayList<String>();
+        this.LightState=new ArrayList<String>();
+       
+        this.Deployment=new ArrayList<String>();
+        this.SensorState=new ArrayList<String>();
     }
 
     private synchronized void sendEvent(String event, String data, String endpoint) {
